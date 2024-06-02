@@ -1,13 +1,15 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WorkProgramController;
+use App\Models\WorkProgram;
 use App\Services\WorkProgram\WorkProgramServiceContract;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function (WorkProgramServiceContract $contract) {
+Route::get('/', static function (WorkProgramServiceContract $contract) {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
@@ -17,9 +19,20 @@ Route::get('/', function (WorkProgramServiceContract $contract) {
     ]);
 });
 
+Route::controller(WorkProgramController::class)
+    ->prefix('work-program')
+    ->group(function () {
+        Route::get('/{type}', 'show');
+        Route::get('/{program}/download/{type}', 'download');
+    });
+
+
+Route::get('/constructor', static function () {
+    return Inertia::render('Constructor');
+})->middleware(['auth', 'verified'])->name('constructor');
+
 Route::get('/wk', function () {
     return Blade::render('work-program', [
-        'year' => 2023,
         'header' => 'Комитет образования, науки и молодежной политики Волгоградской области 111 11231 124124 1241 ',
         'workProgramName' => 'Основы алгоритмизации и программирования 111',
         'specialnost' => ' 09.02.07 Информационные системы и программирование 1',

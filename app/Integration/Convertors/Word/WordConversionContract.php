@@ -7,5 +7,5 @@ use GuzzleHttp\Exception\GuzzleException;
 interface WordConversionContract
 {
     /** @throws GuzzleException */
-    public function convert(string $outputName, mixed $htmlFile): mixed;
+    public function convert(string $outputName, mixed $htmlFile): string;
 }

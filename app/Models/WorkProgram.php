@@ -9,5 +9,12 @@ class WorkProgram extends Model
 {
     use HasFactory;
 
+    protected function casts(): array
+    {
+        return [
+            'content' => 'array',
+        ];
+    }
+
     protected $guarded = false;
 }

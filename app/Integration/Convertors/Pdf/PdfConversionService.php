@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Integration\Convertors\Word;
+namespace App\Integration\Convertors\Pdf;
 
 use App\Integration\HttpClient;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\ResponseInterface;
 
-class WordConversionService extends HttpClient implements WordConversionContract
+class PdfConversionService extends HttpClient implements PdfConversionContract
 {
     public function convert(string $outputName, mixed $htmlFile): string
     {
-        $response = $this->request('POST', '/doc-file', [
+        $response = $this->request('POST', '/pdf-file', [
             RequestOptions::QUERY => [
                 'output' => $outputName,
             ],

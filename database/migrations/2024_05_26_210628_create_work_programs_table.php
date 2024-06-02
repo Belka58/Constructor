@@ -13,6 +13,7 @@ return new class extends Migration
             $table->string('name');
             $table->boolean('publish');
             $table->text('content');
+            $table->foreignId('user_id')->constrained();
             $table->unsignedTinyInteger('type');
             $table->timestamps();
         });
