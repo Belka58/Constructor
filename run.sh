@@ -1,5 +1,5 @@
 #!/bin/bash
 
-./vendor/bin/sail up -d
+docker compose up -d
 
-./vendor/bin/sail artisan migrate
+docker exec constructor-laravel.test-1 php artisan migrate:fresh --seed
