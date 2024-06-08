@@ -30,7 +30,7 @@ class HttpClient
     {
         return [
             RequestOptions::HEADERS => [
-                'apy-token' => 'APY06jKjZsPkZ0n89HUzW741WqDzjBvzP7A4xPwnt5AyN80nTHJU5czR6ZStlZvS',
+                'apy-token' => 'APY0vpkCBLScsIoq7KKMboqTGyrEkmZ2ZyqKl9retgAb2zWhwL9LMZH3MxiGIeUS2',
                 'content-type' => 'multipart/form-data'
             ]
         ];

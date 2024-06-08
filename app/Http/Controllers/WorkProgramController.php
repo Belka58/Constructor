@@ -17,8 +17,11 @@ class WorkProgramController extends Controller
 
     public function showById(WorkProgram $wk): WorkProgram
     {
+        $this->autorizable($wk);
+
         return $wk;
     }
+
     public function show(string $type): Collection|array
     {
         if ($type <= 0 || $type > 4) {
@@ -42,15 +45,9 @@ class WorkProgramController extends Controller
         }
 
         return response()->streamDownload(function () use ($contract, $program, $type) {
-            $key = "$type:$program->id";
-            /**  @var PdfConversionContract|WordConversionContract $contract */
-            if (!Cache::has($key)) {
-                $file = tmpfile();
-                fwrite($file, Blade::render('work-program', $program->content));
-                Cache::put($key, $contract->convert("$program->id.$type", $file));
-            }
-
-            echo Cache::get($key);
+            $file = tmpfile();
+            fwrite($file, Blade::render('work-program', $program->content));
+            echo $contract->convert("$program->id.$type", $file);
         });
     }
 
@@ -62,11 +59,16 @@ class WorkProgramController extends Controller
 
     public function create(Request $request): void
     {
-        WorkProgram::create($request->all());
+        WorkProgram::create([
+            ...$request->all(),
+            'user_id' => Auth::id()
+        ]);
     }
 
     public function update(WorkProgram $wk, Request $request): void
     {
+        $this->autorizable($wk);
+
         $wk->update($request->all());
     }
 

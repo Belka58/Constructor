@@ -77,16 +77,19 @@ const fetch = async (id: string | number | null = null) => {
 
 const onDownload = (id: number, type: string) => {
     axios.get(`/work-program/${id}/download/${type}`, { responseType: 'blob' }).then(res => {
-        const blob = new Blob([res.data], { type: res.headers['content-type'] })
-        const downloadUrl = window.URL.createObjectURL(blob)
-        const linkUrl = document.createElement('a')
+        const blob = new Blob([res.data], { type: res.headers['content-type'] });
+        const downloadUrl = window.URL.createObjectURL(blob);
+        const linkUrl = document.createElement('a');
 
-        linkUrl.download = downloadUrl
-        linkUrl.href = downloadUrl
-        document.body.appendChild(linkUrl)
-        linkUrl.click()
-        document.body.removeChild(linkUrl)
-        linkUrl.remove()
+        const name = items.value.find(x => x.id === id)?.name ?? id;
+        const filename = `${name}.${type}`;
+
+        linkUrl.href = downloadUrl;
+        linkUrl.download = filename;
+        document.body.appendChild(linkUrl);
+        linkUrl.click();
+        document.body.removeChild(linkUrl);
+        window.URL.revokeObjectURL(downloadUrl);
     })
 }
 
