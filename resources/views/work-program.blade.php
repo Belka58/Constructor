@@ -540,7 +540,8 @@ N&nbsp;1547).</span></p>
         <p class=MsoNormal style='margin-bottom:0in;text-align:justify;text-justify:
 inter-ideograph;line-height:normal;background:white'><b><span lang=RU
                                                               style='font-size:14.0pt;font-family:"Times New Roman",serif;color:black'>Организация-разработчик:</span></b><span
-                lang=RU style='font-size:14.0pt;font-family:"Times New Roman",serif;color:black'> {{ $orgRazrab  }}</span></p>
+                lang=RU
+                style='font-size:14.0pt;font-family:"Times New Roman",serif;color:black'> {{ $orgRazrab  }}</span></p>
 
         <p class=MsoNormal style='margin-bottom:0in;text-align:justify;text-justify:
 inter-ideograph;line-height:normal'><span lang=RU style='font-size:14.0pt;
@@ -555,7 +556,7 @@ inter-ideograph;line-height:normal'><b><span lang=RU style='font-size:14.0pt;
 font-family:"Times New Roman",serif'>Разработчики:</span></b></p>
 
         <p class=MsoNormal style='margin-bottom:0in;text-align:justify;text-justify:
-inter-ideograph;line-height:normal'><span lang=RU >
+inter-ideograph;line-height:normal'><span lang=RU>
                 @foreach($razrabi as $razrab)
                     <div style='font-size:14.0pt;
 font-family:"Times New Roman",serif'>
@@ -588,7 +589,6 @@ font-family:"Times New Roman",serif'>
                     </div>
                 @endforeach
             </span></p>
-
 
 
         <b><i><span lang=RU style='font-size:11.0pt;font-family:"Times New Roman",serif'><br
@@ -1439,1757 +1439,173 @@ line-height:normal'><b><span lang=RU style='font-size:14.0pt;font-family:"Times 
                     </p>
                 </td>
             </tr>
-            <tr style='height:24.8pt'>
-                <td width="14%" valign=top style='width:14.08%;border:solid windowtext 1.0pt;
+            @php($allHoursAll = 0)
+            @php($allHours = 0)
+            @foreach($table['razdels'] as $key => $razdel)
+                    <?php
+                    $lessonHours = 0;
+                    $practivHours = 0;
+                    foreach ($razdel['themes'] as $theme) {
+                        $lessonHours += collect($theme['lessons'])->sum('hours');
+                        $practivHours += collect($theme['practika'])->sum('hours');
+                    }
+                    $allHours = $lessonHours + $practivHours;
+                    $allHoursAll += $allHours;
+                    ?>
+
+
+                <tr style='height:24.8pt'>
+                    <td width="14%" valign=top style='width:14.08%;border:solid windowtext 1.0pt;
   border-top:none;padding:0in 5.4pt 0in 5.4pt;height:24.8pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Раздел 1.
-  Основы программирования на языке C#.</span></i></b></p>
-                </td>
-                <td width="54%" colspan=2 valign=top style='width:54.72%;border-top:none;
+                        <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
+                                        lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Раздел {{ $key + 1 }}.  {{ $razdel['name']  }}</span></i></b>
+                        </p>
+                    </td>
+                    <td width="54%" colspan=2 valign=top style='width:54.72%;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt;height:24.8pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU
-                                    style='font-size:10.0pt;font-family:"Times New Roman",serif'>&nbsp;</span></i></b>
-                    </p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
+                        <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
+                                        lang=RU
+                                        style='font-size:10.0pt;font-family:"Times New Roman",serif'>&nbsp;</span></i></b>
+                        </p>
+                    </td>
+                    <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt;height:24.8pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    style='font-size:10.0pt;font-family:"Times New Roman",serif'>40</span></i></b></p>
-                </td>
-                <td width="13%" valign=top style='width:13.12%;border-top:none;border-left:
+                        <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
+                                        style='font-size:10.0pt;font-family:"Times New Roman",serif'>{{ $allHours }}</span></i></b>
+                        </p>
+                    </td>
+                    <td width="13%" valign=top style='width:13.12%;border-top:none;border-left:
+  none;border-bottom:none;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt;height:24.8pt'>
+                        <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
+                                lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>&nbsp;</span></p>
+                    </td>
+                </tr>
+
+                @foreach($razdel['themes'] as $themeKey => $theme)
+                    {{-- лекции--}}
+                    <tr style='height:24.8pt'>
+                        <td width="14%" valign=top style='width:14.08%;border:solid windowtext 1.0pt;
+  border-top:none;border-bottom:none;padding:0in 5.4pt 0in 5.4pt;height:24.8pt'>
+                            <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
+                                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Тема {{$themeKey + 1}}. {{ $theme['name']  }}</span></i></b>
+                            </p>
+                        </td>
+                        <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt;height:24.8pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>&nbsp;</span></p>
-                </td>
-            </tr>
-            <tr style='height:24.8pt'>
-                <td width="14%" rowspan=22 valign=top style='width:14.08%;border:solid windowtext 1.0pt;
-  border-top:none;padding:0in 5.4pt 0in 5.4pt;height:24.8pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Тема 1.
-  Основы программирования на языке C#</span></i></b></p>
-                </td>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:24.8pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Содержание
+                            <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
+                                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Содержание
   учебного материала</span></i></b></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
+                        </td>
+                        <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt;height:24.8pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Уровень
+                            <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
+                                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Уровень
   освоения</span></i></b></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
+                        </td>
+                        <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt;height:24.8pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><i><span
-                                style='font-size:10.0pt;font-family:"Times New Roman",serif'>30</span></i></p>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><i><span
-                                lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif;
+                            <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><i><span
+                                        style='font-size:10.0pt;font-family:"Times New Roman",serif'>{{$lessonHours  }}</span></i>
+                            </p>
+                            <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><i><span
+                                        lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif;
   color:red'>&nbsp;</span></i></p>
-                </td>
-                <td width="13%" rowspan=85 valign=top style='width:13.12%;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:24.8pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>ОК 1, ОК
-  2, ОК 4, ОК 5, ОК 9, ОК 10;</span></p>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>ПК
-  1.1-1.5, ПК 2.4, ПК 2.5.</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
+                        </td>
+                        <td width="13%" valign=top style='width:13.12%;
+  border-left:none;border-bottom:none;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt;height:24.8pt;border-top:@if($key === 0) solid black 1px @else none @endif'>
+                            <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
+                                    lang=RU
+                                    style='font-size:10.0pt;font-family:"Times New Roman",serif'>{{ $key === 0 ? $table['compotensy'] : '' }}</span>
+                            </p>
+                        </td>
+                    </tr>
+                    @foreach($theme['lessons'] as $lessonKey => $lesson)
+                        <tr style='height:1.0pt'>
+                            <td style="border: solid black 1px; border-bottom: none; border-top: none"/>
+
+                            <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>1. Алгоритм.</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
+                                <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
+                                        lang=RU
+                                        style='font-size:10.0pt;font-family:"Times New Roman",serif'>{{$lessonKey + 1}}. {{ $lesson['name'] }}.</span>
+                                </p>
+                            </td>
+                            <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
+                                <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
+                                        lang=RU
+                                        style='font-size:10.0pt;font-family:"Times New Roman",serif'>{{ $lesson['osvoen'] }}</span>
+                                </p>
+                            </td>
+                            <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><i><span
-                                lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></i></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2. Типы
-  данных. </span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><i><span
-                                lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></i></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>3.
-  Структура программы.</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><i><span
-                                lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></i></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>4. Классификация
-  типов данных.</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>1</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><i><span
-                                lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></i></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>5.
-  Консольное приложение.</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><i><span
-                                lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></i></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>6.
-  Операции и целочисленные выражения.</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><i><span
-                                lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></i></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>7.
-  Поразрядные операции</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>1</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><i><span
-                                lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></i></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>8. Преобразование
-  базовых типов</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><i><span
-                                lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></i></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>9.
-  Логический тип и логические выражения</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><i><span
-                                lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></i></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>10. Условный
-  оператор</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><i><span
-                                lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></i></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>11. Массивы</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>1</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><i><span
-                                lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></i></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>12. Массивы
-  массивов </span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><i><span
-                                lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></i></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>13. Строки</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><i><span
-                                lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></i></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            style='font-size:10.0pt;font-family:"Times New Roman",serif'>14. </span><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Операторы</span><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'> </span><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>цикла</span><span
-                            style='font-size:10.0pt;font-family:"Times New Roman",serif'> while, do while</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><i><span
-                                lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></i></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>15. Операторы
-  цикла for, foreach</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><i><span
-                                lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></i></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="54%" colspan=2 valign=top style='width:54.72%;border-top:none;
+                                <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><i><span
+                                            lang=RU
+                                            style='font-size:10.0pt;font-family:"Times New Roman",serif'>{{ $lesson['hours'] }}</span></i>
+                                </p>
+                            </td>
+                            <td style="border: solid black 1px; border-bottom: none; border-top: none"/>
+                        </tr>
+                    @endforeach
+
+                    {{-- тематика практики --}}
+                    <tr style='height:1.0pt'>
+                        <td style="border: solid black 1px; border-bottom: none; border-top: none"/>
+
+                        <td width="54%" colspan=2 valign=top style='width:54.72%;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Тематика
+                            <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
+                                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Тематика
   практических занятий и лабораторных работ</span></i></b></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
+                        </td>
+                        <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><i><span
-                                lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>10</span></i></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="54%" colspan=2 valign=top style='width:54.72%;border-top:none;
+                            <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><i><span
+                                        lang=RU
+                                        style='font-size:10.0pt;font-family:"Times New Roman",serif'>{{  $practivHours }}</span></i>
+                            </p>
+                        </td>
+                        <td style="border: solid black 1px; border-bottom: none; border-top: none"/>
+                    </tr>
+                    @foreach($theme['practika'] as $lessonKey => $lesson)
+                        <tr style='height:1.0pt'>
+                            <td style="border: solid black 1px; border-top: none; @if(count($theme['practika']) !== $lessonKey + 1) border-bottom: none; @endif"/>
+
+                            <td width="54%" colspan=2 valign=top style='width:54.72%;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Лабораторная
-  работа 1. Разработка линейных алгоритмов</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><i><span
-                                lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2 </span></i></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="54%" colspan=2 valign=bottom style='width:54.72%;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Лабораторная
-  работа 2. Разработка разветвляющихся алгоритмов</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><i><span
-                                lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></i></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="54%" colspan=2 valign=bottom style='width:54.72%;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Лабораторная
-  работа 3. Разработка циклических алгоритмов.</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><i><span
-                                lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></i></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="54%" colspan=2 valign=bottom style='width:54.72%;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Лабораторная
-  работа 4. Работа с одномерными массивами</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><i><span
-                                lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></i></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="54%" colspan=2 valign=bottom style='width:54.72%;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Лабораторная
-  работа 5. Работа с двумерными массивами</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><i><span
-                                lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></i></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="14%" valign=top style='width:14.08%;border:solid windowtext 1.0pt;
-  border-top:none;padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Раздел
-  2. Структурная организация данных</span></i></b></p>
-                </td>
-                <td width="54%" colspan=2 valign=top style='width:54.72%;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU
-                                    style='font-size:10.0pt;font-family:"Times New Roman",serif'>&nbsp;</span></i></b>
-                    </p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><span
-                                lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>16</span></b></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="14%" rowspan=10 valign=top style='width:14.08%;border:solid windowtext 1.0pt;
-  border-top:none;padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Тема 1.
-  Структурная организация данных.</span></i></b></p>
-                </td>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Содержание
-  учебного материала </span></i></b></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Уровень
-  освоения</span></i></b></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>12</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>1. Структурная
-  организация данных</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2. Платформа
-  .Net Framework и спецификация CTS</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>3. Простые
-  (базовые) типы C# как классы.</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>1</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>4. Специфические
-  методы и поля простых типов</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>5. Модели
-  объектов и процессов</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>1</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>6. Правила
-  оформления текстов программ.</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>&nbsp;</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="54%" colspan=2 valign=top style='width:54.72%;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Тематика
-  практических занятий и лабораторных работ</span></i></b></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>4</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="54%" colspan=2 valign=top style='width:54.72%;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Лабораторная
-  работа 6. Разработка различных методов.</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="54%" colspan=2 valign=top style='width:54.72%;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Лабораторная
-  работа 7. Разработка различных методов под разные условия.</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="14%" valign=top style='width:14.08%;border:solid windowtext 1.0pt;
-  border-top:none;padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Раздел
-  3. Алгоритмы и структуры данных</span></i></b></p>
-                </td>
-                <td width="54%" colspan=2 valign=top style='width:54.72%;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>&nbsp;</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><span
-                                lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>42</span></b></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="14%" rowspan=15 valign=top style='width:14.08%;border:solid windowtext 1.0pt;
-  border-top:none;padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Тема.
-  Алгоритмы и структуры данных</span></i></b></p>
-                </td>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Содержание
-  учебного материала</span></i></b></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Уровень
-  освоения</span></i></b></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            style='font-size:10.0pt;font-family:"Times New Roman",serif'>36</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>1. Методы
-  сортировки</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2.
-  Методы сортировки</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>3.
-  Методы поиска</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>4.
-  Методы поиска</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>5.
-  Алгоритмы поиска словесной информации.</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>6.
-  Итеративные и рекурсивные алгоритмы.</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>1</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>7.
-  Основные определения теории графов.</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>8.
-  Алгоритмы построения остовного (покрывающего) дерева сети.</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>9.
-  Алгоритмы нахождения кратчайших путей на графах.</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>10. Алгоритмы
-  нахождения кратчайших путей на графах.</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>11. Алгоритмы
-  нахождения кратчайших путей на графах.</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>12. Эвристические
-  алгоритмы</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>13. Эвристические
-  алгоритмы</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>14. Эвристические
-  алгоритмы</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="14%" valign=top style='width:14.08%;border:solid windowtext 1.0pt;
-  border-top:none;padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU
-                                    style='font-size:10.0pt;font-family:"Times New Roman",serif'>&nbsp;</span></i></b>
-                    </p>
-                </td>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>15. Метод
-  ветвей и границ. Задача коммивояжера.</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="14%" valign=top style='width:14.08%;border:solid windowtext 1.0pt;
-  border-top:none;padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU
-                                    style='font-size:10.0pt;font-family:"Times New Roman",serif'>&nbsp;</span></i></b>
-                    </p>
-                </td>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>16. Моделирование
-  с использованием генераторов случайных чисел.</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="14%" valign=top style='width:14.08%;border:solid windowtext 1.0pt;
-  border-top:none;padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU
-                                    style='font-size:10.0pt;font-family:"Times New Roman",serif'>&nbsp;</span></i></b>
-                    </p>
-                </td>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>17. Машина
-  Тьюринга.</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="14%" valign=top style='width:14.08%;border:solid windowtext 1.0pt;
-  border-top:none;padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU
-                                    style='font-size:10.0pt;font-family:"Times New Roman",serif'>&nbsp;</span></i></b>
-                    </p>
-                </td>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>18. Элементы
-  математической логики.</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="14%" valign=top style='width:14.08%;border:solid windowtext 1.0pt;
-  border-top:none;padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU
-                                    style='font-size:10.0pt;font-family:"Times New Roman",serif'>&nbsp;</span></i></b>
-                    </p>
-                </td>
-                <td width="54%" colspan=2 valign=top style='width:54.72%;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Тематика
-  практических занятий и лабораторных работ</span></i></b></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>6</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="14%" valign=top style='width:14.08%;border:solid windowtext 1.0pt;
-  border-top:none;padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU
-                                    style='font-size:10.0pt;font-family:"Times New Roman",serif'>&nbsp;</span></i></b>
-                    </p>
-                </td>
-                <td width="54%" colspan=2 valign=top style='width:54.72%;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Лабораторная
-  работа 11. Алгоритмы сортировки.</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="14%" valign=top style='width:14.08%;border:solid windowtext 1.0pt;
-  border-top:none;padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU
-                                    style='font-size:10.0pt;font-family:"Times New Roman",serif'>&nbsp;</span></i></b>
-                    </p>
-                </td>
-                <td width="54%" colspan=2 valign=top style='width:54.72%;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Лабораторная
-  работа 12. Алгоритмы поиска.</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="14%" valign=top style='width:14.08%;border:solid windowtext 1.0pt;
-  border-top:none;padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU
-                                    style='font-size:10.0pt;font-family:"Times New Roman",serif'>&nbsp;</span></i></b>
-                    </p>
-                </td>
-                <td width="54%" colspan=2 valign=top style='width:54.72%;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Лабораторная
-  работа 13. Работа с потоками и файловой системой</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="14%" valign=top style='width:14.08%;border:solid windowtext 1.0pt;
-  border-top:none;padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Раздел
-  4. Программирование структур данных.</span></i></b></p>
-                </td>
-                <td width="54%" colspan=2 valign=top style='width:54.72%;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>&nbsp;</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><span
-                                lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>12</span></b></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="14%" rowspan=8 valign=top style='width:14.08%;border:solid windowtext 1.0pt;
-  border-top:none;padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Тема 1. Программирование
-  структур данных.</span></i></b></p>
-                </td>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Содержание
-  учебного материала</span></i></b></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Уровень
-  освоения</span></i></b></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>6</span></p>
-                </td>
-            </tr>
-            <tr style='height:14.95pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:14.95pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>1. Операции
-  со списками.</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:14.95pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:14.95pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2. Решение
-  задач на структуры данных</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>3. Решение
-  задач на структуры данных</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="54%" colspan=2 valign=top style='width:54.72%;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Тематика
-  практических занятий и лабораторных работ</span></i></b></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>6</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="54%" colspan=2 valign=top style='width:54.72%;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Лабораторная
-  работа 8. Разработка структур данных.</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="54%" colspan=2 valign=top style='width:54.72%;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Лабораторная
-  работа 9. Линейные однонаправленные списки.</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="54%" colspan=2 valign=top style='width:54.72%;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Лабораторная
-  работа 10. Линейные двунаправленные списки.</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="14%" valign=top style='width:14.08%;border:solid windowtext 1.0pt;
-  border-top:none;padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Раздел
-  5. Основные принципы объектно-ориентированного программирования.</span></i></b></p>
-                </td>
-                <td width="54%" colspan=2 valign=top style='width:54.72%;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><span
-                                lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>&nbsp;</span></b>
-                    </p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><span
-                                lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>30</span></b></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="14%" rowspan=17 valign=top style='width:14.08%;border:solid windowtext 1.0pt;
-  border-top:none;padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Тема 1. Основные
-  принципы объектно-ориентированного программирования.</span></i></b></p>
-                </td>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Содержание
-  учебного материала</span></i></b></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Уровень
-  освоения</span></i></b></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>18</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>1.
-  Объектно-ориентированная модель</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2. Объектно-ориентированная
-  модель</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>3. Этапы
-  разработки программных продуктов с использованием ООП</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>4. Инкапсуляция</span>
-                    </p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>5. Наследование</span>
-                    </p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>6. Полиморфизм</span>
-                    </p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>7. Характеристики
-  объектно-ориентированного программирования</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>8. Разбор
-  примерных задач на ООП.</span></p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            style='font-size:10.0pt;font-family:"Times New Roman",serif'>3</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>3</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="45%" valign=top style='width:45.9%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>9. UML-диаграммы</span>
-                    </p>
-                </td>
-                <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            style='font-size:10.0pt;font-family:"Times New Roman",serif'>&nbsp;</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>&nbsp;</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="54%" colspan=2 valign=top style='width:54.72%;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><i><span
-                                    lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Тематика
-  практических занятий и лабораторных работ</span></i></b></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>12</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="54%" colspan=2 valign=top style='width:54.72%;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Лабораторная
-  работа 15. Делегаты</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="54%" colspan=2 valign=top style='width:54.72%;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Лабораторная
-  работа 16. Разработка Windows Form приложения.</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="54%" colspan=2 valign=top style='width:54.72%;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Лабораторная
-  работа 17. Изучение XML и работа с ним.</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="54%" colspan=2 valign=top style='width:54.72%;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Лабораторная
-  работа 18. Разработка базы данных пользователей.</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="54%" colspan=2 valign=top style='width:54.72%;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Лабораторная
-  работа 19. Добавление функционала к разработанной базе данных.</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
-            <tr style='height:1.0pt'>
-                <td width="54%" colspan=2 valign=top style='width:54.72%;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Лабораторная
-  работа 20. Шифрование данных с помощью алгоритма AES-256</span></p>
-                </td>
-                <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
-                </td>
-            </tr>
+                                <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
+                                        lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>Лабораторная
+  работа {{ $lessonKey + 1  }}. {{ $lesson['name'] }}</span></p>
+                            </td>
+                            <td width="18%" valign=top style='width:18.08%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
+                                <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><i><span
+                                            lang=RU
+                                            style='font-size:10.0pt;font-family:"Times New Roman",serif'>{{ $lesson['hours'] }} </span></i>
+                                </p>
+                            </td>
+                            <td style="border: solid black 1px; border-top: none;border-bottom: none;"/>
+                        </tr>
+                    @endforeach
+
+                @endforeach
+
+            @endforeach
+
             <tr style='height:25.8pt'>
                 <td width="68%" colspan=3 valign=top style='width:68.8%;border:solid windowtext 1.0pt;
   border-top:none;padding:0in 5.4pt 0in 5.4pt;height:25.8pt'>
@@ -3211,12 +1627,19 @@ line-height:normal'><b><span lang=RU style='font-size:14.0pt;font-family:"Times 
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt;height:25.8pt'>
                     <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>9</span></p>
+                            lang=RU
+                            style='font-size:10.0pt;font-family:"Times New Roman",serif'>{{ $table['samostoylka']  }}</span>
+                    </p>
                     <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>7</span></p>
+                            lang=RU
+                            style='font-size:10.0pt;font-family:"Times New Roman",serif'>{{ $table['reshenie_zadas']  }}</span>
+                    </p>
                     <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            lang=RU style='font-size:10.0pt;font-family:"Times New Roman",serif'>2</span></p>
+                            lang=RU
+                            style='font-size:10.0pt;font-family:"Times New Roman",serif'>{{ $table['otchet']  }}</span>
+                    </p>
                 </td>
+                <td style="border: none;border-bottom:solid black 1px;border-right: solid black 1px"/>
             </tr>
             <tr style='height:5.45pt'>
                 <td width="68%" colspan=3 valign=top style='width:68.8%;border:solid windowtext 1.0pt;
@@ -3230,7 +1653,8 @@ line-height:normal'><b><span lang=RU style='font-size:14.0pt;font-family:"Times 
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt;height:5.45pt'>
                     <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            style='font-size:10.0pt;font-family:"Times New Roman",serif'>0</span></p>
+                            style='font-size:10.0pt;font-family:"Times New Roman",serif'>{{ $table['insult']  }}</span>
+                    </p>
                 </td>
                 <td width="13%" valign=top style='width:13.12%;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
@@ -3252,7 +1676,8 @@ line-height:normal'><b><span lang=RU style='font-size:14.0pt;font-family:"Times 
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt;height:5.3pt'>
                     <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            style='font-size:10.0pt;font-family:"Times New Roman",serif'>8</span></p>
+                            style='font-size:10.0pt;font-family:"Times New Roman",serif'>{{ $table['attectacia']  }}</span>
+                    </p>
                 </td>
                 <td width="13%" valign=top style='width:13.12%;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
@@ -3275,7 +1700,8 @@ line-height:normal'><b><span lang=RU style='font-size:14.0pt;font-family:"Times 
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
                     <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
-                            style='font-size:10.0pt;font-family:"Times New Roman",serif'>145</span></p>
+                            style='font-size:10.0pt;font-family:"Times New Roman",serif'>{{ $allHoursAll }}</span>
+                    </p>
                 </td>
                 <td width="13%" valign=top style='width:13.12%;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;

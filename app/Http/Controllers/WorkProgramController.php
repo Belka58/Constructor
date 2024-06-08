@@ -14,6 +14,11 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class WorkProgramController extends Controller
 {
+
+    public function showById(WorkProgram $wk): WorkProgram
+    {
+        return $wk;
+    }
     public function show(string $type): Collection|array
     {
         if ($type <= 0 || $type > 4) {
@@ -28,9 +33,7 @@ class WorkProgramController extends Controller
 
     public function download(WorkProgram $program, string $type): StreamedResponse
     {
-        if ($program->publish !== 1 && Auth::id() !== $program->user_id) {
-            abort(403);
-        }
+        $this->autorizable($program, $program->publish !== 1);
 
         if ($type === 'pdf') {
             $contract = app(PdfConversionContract::class);
@@ -49,5 +52,28 @@ class WorkProgramController extends Controller
 
             echo Cache::get($key);
         });
+    }
+
+    public function destroy(WorkProgram $wk): void
+    {
+        $this->autorizable($wk);
+        $wk->delete();
+    }
+
+    public function create(Request $request): void
+    {
+        WorkProgram::create($request->all());
+    }
+
+    public function update(WorkProgram $wk, Request $request): void
+    {
+        $wk->update($request->all());
+    }
+
+    protected function autorizable(WorkProgram $wk, bool $when = true): void
+    {
+        if (Auth::id() !== $wk->user_id && $when) {
+            abort(403);
+        }
     }
 }
