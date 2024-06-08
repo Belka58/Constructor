@@ -1,6 +1,5 @@
 <template>
     <Head title="Конструктор"/>
-
     <AuthenticatedLayout>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -40,12 +39,11 @@
                             <div class="flex gap-3">
                                 <div class="w-full">
                                     <label
-                                        class="block text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">Заголовок</label>
+                                        class="block text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">Образовательное учреждение </label>
                                     <el-input v-model="fullContent.content.header" class="bg-gray-700"/>
                                 </div>
                                 <div class="w-full">
-                                    <label class="block text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">Организация
-                                        разработки</label>
+                                    <label class="block text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">Организация - разработчик</label>
                                     <el-input v-model="fullContent.content.orgRazrab" class="bg-gray-700"/>
                                 </div>
                             </div>
@@ -80,34 +78,39 @@
                                 </el-button>
                             </div>
                             <div>
-                                <label class="block text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">Таблица -
-                                    Аттестация</label>
-                                <el-input v-model="fullContent.content.table.attectacia" class="bg-gray-700"/>
+                                <label class="block text-2xl font-medium text-gray-700 dark:text-gray-300 mb-2">Таблица</label>
+                                <div class="flex gap-3">
+                                    <div class="w-full">
+                                        <label class="block text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                            Аттестация (ч)</label>
+                                        <el-input v-model="fullContent.content.table.attectacia" class="bg-gray-700"/>
+                                    </div>
+                                    <div class="w-full">
+                                        <label class="block text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                            Консультации (ч)</label>
+                                        <el-input v-model="fullContent.content.table.insult" class="bg-gray-700"/>
+                                    </div>
+                                    <div class="w-full">
+                                        <label class="block text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                            Решение задач (ч)</label>
+                                        <el-input v-model="fullContent.content.table.reshenie_zadas" class="bg-gray-700"/>
+                                    </div>
+                                    <div class="w-full">
+                                        <label class="block text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                            Отчет (ч)</label>
+                                        <el-input v-model="fullContent.content.table.otchet" class="bg-gray-700"/>
+                                    </div>
+                                    <div class="w-full">
+                                        <label class="block text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                            Самостоятельно (ч)</label>
+                                        <el-input v-model="fullContent.content.table.samostoylka" class="bg-gray-700"/>
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                <label class="block text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">Таблица -
-                                    Компетенция</label>
+                            <div class="w-full">
+                                <label class="block text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    Компетенции</label>
                                 <el-input v-model="fullContent.content.table.compotensy" class="bg-gray-700"/>
-                            </div>
-                            <div>
-                                <label class="block text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">Таблица -
-                                    Оскорбление</label>
-                                <el-input v-model="fullContent.content.table.insult" class="bg-gray-700"/>
-                            </div>
-                            <div>
-                                <label class="block text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">Таблица -
-                                    Решение задач</label>
-                                <el-input v-model="fullContent.content.table.reshenie_zadas" class="bg-gray-700"/>
-                            </div>
-                            <div>
-                                <label class="block text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">Таблица -
-                                    Отчет</label>
-                                <el-input v-model="fullContent.content.table.otchet" class="bg-gray-700"/>
-                            </div>
-                            <div>
-                                <label class="block text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">Таблица -
-                                    Самостоятельно</label>
-                                <el-input v-model="fullContent.content.table.samostoylka" class="bg-gray-700"/>
                             </div>
                             <div>
                                 <label
@@ -143,7 +146,7 @@
                                                 Добавить лекцию
                                             </el-button>
                                             <el-button type="primary" @click="addPractika(sectionIndex, themeIndex)">
-                                                Добавить практику
+                                                Добавить лабораторную
                                             </el-button>
                                         </div>
                                         <div class="pl-16">
@@ -152,7 +155,7 @@
                                                 <div v-for="(lesson, lessonIndex) in theme.lessons" :key="lessonIndex"
                                                      class="flex space-x-2">
                                                         <span>{{ lessonIndex + 1 }}. </span>
-                                                    <el-input v-model="lesson.name" placeholder="Название урока"
+                                                    <el-input v-model="lesson.name" placeholder="Название лекции"
                                                               class="bg-gray-700"/>
                                                     <el-input v-model="lesson.hours" placeholder="Часы"
                                                               class="bg-gray-700"/>
@@ -172,7 +175,7 @@
                                                 <div v-for="(practika, practikaIndex) in theme.practika"
                                                      :key="practikaIndex" class="flex space-x-2">
                                                     <span>{{ practikaIndex + 1 }}. </span>
-                                                    <el-input v-model="practika.name" placeholder="Название практики"
+                                                    <el-input v-model="practika.name" placeholder="Название лабораторной"
                                                               class="bg-gray-700"/>
                                                     <el-input v-model="practika.hours" placeholder="Часы"
                                                               class="bg-gray-700"/>

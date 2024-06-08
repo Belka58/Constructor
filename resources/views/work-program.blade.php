@@ -1158,6 +1158,19 @@ line-height:normal'><b><span lang=RU style='font-size:14.0pt;font-family:"Times 
 СТРУКТУРА И СОДЕРЖАНИЕ УЧЕБНОЙ ДИСЦИПЛИНЫ</span></b></p>
         <!--- TODO: тоже само как-то придумать нада -->
 
+        @php
+            $allHours = 0;
+            $lessonHours = 0;
+            $practivHours = 0;
+           foreach ($table['razdels'] as $razdel) {
+               foreach ($razdel['themes'] as $theme) {
+                   $lessonHours += collect($theme['lessons'])->sum('hours');
+                   $practivHours += collect($theme['practika'])->sum('hours');
+               }
+           }
+
+           $allHours = $lessonHours + $practivHours;
+        @endphp
         <p class=MsoNormal align=center style='margin-bottom:0in;text-align:center;
 line-height:normal'><b><span lang=RU style='font-size:14.0pt;font-family:"Times New Roman",serif'>&nbsp;</span></b></p>
 
@@ -1192,7 +1205,9 @@ line-height:normal'><b><span lang=RU style='font-size:14.0pt;font-family:"Times 
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0in 5.4pt 0in 5.4pt;height:22.7pt'>
                     <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><span
-                                lang=RU style='font-size:14.0pt;font-family:"Times New Roman",serif'>162</span></b></p>
+                                lang=RU
+                                style='font-size:14.0pt;font-family:"Times New Roman",serif'>{{ $allHours  }}</span></b>
+                    </p>
                 </td>
             </tr>
             <tr style='height:1.0pt'>
@@ -1206,7 +1221,7 @@ line-height:normal'><b><span lang=RU style='font-size:14.0pt;font-family:"Times 
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
                     <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><span
-                                lang=RU style='font-size:14.0pt;font-family:"Times New Roman",serif'>145</span></b></p>
+                                lang=RU style='font-size:14.0pt;font-family:"Times New Roman",serif'>{{ $allHours + $table['insult'] + $table['attectacia'] + $table['samostoylka']  }}</span></b></p>
                 </td>
             </tr>
             <tr style='height:1.0pt'>
@@ -1228,7 +1243,7 @@ line-height:normal'><b><span lang=RU style='font-size:14.0pt;font-family:"Times 
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
                     <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><span
-                                lang=RU style='font-size:14.0pt;font-family:"Times New Roman",serif'>105</span></b></p>
+                                lang=RU style='font-size:14.0pt;font-family:"Times New Roman",serif'>{{ $lessonHours  }}</span></b></p>
                 </td>
             </tr>
             <tr style='height:1.0pt'>
@@ -1242,7 +1257,7 @@ line-height:normal'><b><span lang=RU style='font-size:14.0pt;font-family:"Times 
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
                     <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><span
-                                lang=RU style='font-size:14.0pt;font-family:"Times New Roman",serif'>40</span></b></p>
+                                lang=RU style='font-size:14.0pt;font-family:"Times New Roman",serif'>{{ $practivHours  }}</span></b></p>
                 </td>
             </tr>
             <tr style='height:1.0pt'>
@@ -1298,7 +1313,7 @@ line-height:normal'><b><span lang=RU style='font-size:14.0pt;font-family:"Times 
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
                     <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><span
-                                lang=RU style='font-size:14.0pt;font-family:"Times New Roman",serif'>9</span></b></p>
+                                lang=RU style='font-size:14.0pt;font-family:"Times New Roman",serif'>{{ $table['samostoylka']  }}</span></b></p>
                 </td>
             </tr>
             <tr style='height:17.45pt'>
@@ -1329,7 +1344,7 @@ line-height:normal'><b><span lang=RU style='font-size:14.0pt;font-family:"Times 
   none;border-bottom:solid windowtext 1.0pt;border-right:solid black 1.0pt;
   padding:0in 5.4pt 0in 5.4pt;height:2.95pt'>
                     <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><span
-                                lang=RU style='font-size:14.0pt;font-family:"Times New Roman",serif'>0</span></b></p>
+                                lang=RU style='font-size:14.0pt;font-family:"Times New Roman",serif'>{{ $table['insult']  }}</span></b></p>
                 </td>
             </tr>
             <tr style='height:4.75pt'>
@@ -1344,7 +1359,7 @@ line-height:normal'><b><span lang=RU style='font-size:14.0pt;font-family:"Times 
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0in 5.4pt 0in 5.4pt;height:4.75pt'>
                     <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><b><span
-                                lang=RU style='font-size:14.0pt;font-family:"Times New Roman",serif'>8</span></b></p>
+                                lang=RU style='font-size:14.0pt;font-family:"Times New Roman",serif'>{{ $table['attectacia']  }}</span></b></p>
                 </td>
             </tr>
         </table>
